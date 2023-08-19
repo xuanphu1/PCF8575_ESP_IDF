@@ -1,11 +1,12 @@
-#ifndef __PCF8575_H__
-#define __PCF8575_H__
+#ifndef __PCF8575_PRO_H__
+#define __PCF8575_PRO_H__
 
 #include <stddef.h>
 #include <i2cdev.h>
 #include <esp_err.h>
 #include "driver/gpio.h"
 #include "esp_idf_lib_helpers.h"
+#include "../component/pcf8575/pcf8575.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,7 +40,7 @@ typedef struct {
  * @return ESP_OK 
  * 
 */
-esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, uint8_t addr, i2c_dev_t port, gpio_config_t scl, gpio_config_t sda);
+esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, uint8_t addr, i2c_port_t port, gpio_num_t sda_gpio, gpio_num_t scl_gpio);
 
 /**
  * @brief Free device descriptor
@@ -107,4 +108,4 @@ esp_err_t pcf8575_interruptClear(pcf8575_t *pcf8575);
 #endif
 /**@}*/
 
-#endif /* __PCF8575_H__ */
+#endif /* __PCF8575_PRO_H__ */
