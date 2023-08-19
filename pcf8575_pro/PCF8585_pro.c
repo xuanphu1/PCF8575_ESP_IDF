@@ -2,7 +2,7 @@
 #include "pcf8575.h"
 
 //----------------------****----------------------------------------------------------
-// Initialize PCF8575
+// Khởi tạo PCF8575
 esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, uint8_t addr, i2c_dev_t port, gpio_config_t scl, gpio_config_t sda){
     
     esp_err_t error_code = pcf8575_init_decs(pcf8575->dev, addr, port , scl, sda);
@@ -16,7 +16,7 @@ esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, uint8_t addr, i2c_dev_t port, g
             return error_code;
         }
 }
-// 
+// Xóa dữ liệu đã khởi tạo
 esp_err_t pcf8575_deinitialize(pcf8575_t *pcf8575){
     esp_err_t error_code = pcf8575_free_desc(pcf8575->dev);
     if(error_code != ESP_OK){
@@ -28,7 +28,7 @@ esp_err_t pcf8575_deinitialize(pcf8575_t *pcf8575){
         return error_code;
     }
 }
-
+// Đọc trạng thái cùng một lúc tất cả các chân GPIO của pcf8575 và lưu và giá trị val
 esp_err_t pcf8575_readAllPin(pcf8575_t *pcf8575, uint16_t *val) 
 {
     esp_err_t error_code = pcf8575_port_read(pcf8575->dev,pcf8575->io_state);
@@ -42,7 +42,7 @@ esp_err_t pcf8575_readAllPin(pcf8575_t *pcf8575, uint16_t *val)
     }
 }
 
-
+// Ghi giá trị logic 1 hoặc logic 0 vào tất cả các chân GPIO của pcf8575 cùng một lúc 
 esp_err_t pcf8575_writeAllPin(pcf8575_t *pcf8575 ,uint16_t val){
 
     esp_err_t error_code = pcf8575_port_write(pcf8575->dev,val);
@@ -56,31 +56,58 @@ esp_err_t pcf8575_writeAllPin(pcf8575_t *pcf8575 ,uint16_t val){
     }
 }
 
+// Ghi giá trị logic 1 hoặc logic 0 vào một chân GPIO cụ thể
 esp_err_t pcf8575_writeOnePin(pcf8575_t *pcf8575, uint8_t pin, bool state){
 
     
-    if(pin > 15) return ESP_ERR_INVALID_ARG;
+    if(pin > 17 || pin == 8 || pin == 9 ) return ESP_ERR_INVALID_ARG; 
 
-    uint16_t data = pcf8575->io_state ;
-    if (state) data |= BV(pin);
-    else data &= ~ BV(pin);
+    if(pin < 8)
+    {
+        uint16_t data = pcf8575->io_state ;
+        if (state) data |= BV(pin);
+        else data &= ~ BV(pin);
 
-    return pcf8575_writeAllPin(pcf8575,data);
+        return pcf8575_writeAllPin(pcf8575,data);
+    }
+    if(pin > 9)                                                        // Các chân của pcf8575 là từ P0 -> P7 
+    {                                                                  //                            P10 -> P17
+        pin = pin - 2;
+        uint16_t data = pcf8575->io_state ;
+        if (state) data |= BV(pin);
+        else data &= ~ BV(pin);
+
+        return pcf8575_writeAllPin(pcf8575,data);
+    }
+    
 }
-
+// Hàm đọc giá trị logic chân GPIO cụ thể trong pcf8575 
 esp_err_t pcf8575_readOnePin(pcf8575_t *pcf8575, uint16_t pin, bool &state){
-    if(pin > 15) return ESP_ERR_INVALID_ARG;
 
-    uint16_t data = pcf8575->io_state ;
-    *state = data & BV(pin);
-    return ESP_OK;
-}
+    if(pin > 17 || pin == 8 || pin == 9) return ESP_ERR_INVALID_ARG;
+
+    if (pin < 8)
+    {
+        uint16_t data = pcf8575->io_state ;
+        *state = data & BV(pin);
+        return ESP_OK;
+    }
+    if (pin > 9)                                                          // Các chân của pcf8575 là từ P0 -> P7 
+    {                                                                     //                            P10 -> P17
+        pin = pin - 2 ;
+        uint16_t data = pcf8575->io_state ;
+        *state = data & BV(pin);
+        return ESP_OK;
+    }
+    }
+    
 
 
 void IRAM_ATTR interrupe_handler(void *arg){
-    printf("Interrupt occupied!\n");
+    ESP_LOGI(__func__ , "Interrupt occurred !");
 }
 
+// Hàm interrupt
 esp_err_t pcf8575_interrupt(pcf8575_t *pcf8575,bool enable){
     if (enable){
         // Cấu hình GPIO làm đầu vào với chế độ pull-pu là HIGH
@@ -99,7 +126,7 @@ esp_err_t pcf8575_interrupt(pcf8575_t *pcf8575,bool enable){
     }
 return ESP_OK;
 }
-
+// Check xem hàm interrupt đã được kích hoạt hay chưa
 esp_err_t pcf8575_interruptCheck(pcf8575_t *pcf8575, bool *occurred){
     if(!occurred){
         return ESP_ERR_INVALID_ARG;
@@ -110,11 +137,11 @@ esp_err_t pcf8575_interruptCheck(pcf8575_t *pcf8575, bool *occurred){
     *occurred = (level == 0) ;
     return ESP_OK;
 }
-
+// Đọc trạng thái hiện tại của các chân I/O để xóa cờ interrupt
 esp_err_t pcf8575_interruptClear(pcf8575_t *pcf8575) {
     uint16_t data;
 
-    // Đọc trạng thái hiện tại của các chân I/O để xóa cờ interrupt
+    
     esp_err_t ret = pcf8575_read(pcf8575->dev, &pcf8575->io_state);
     if (ret != ESP_OK) {
         return ret;
