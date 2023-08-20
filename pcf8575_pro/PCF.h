@@ -4,9 +4,11 @@
 #include <stddef.h>
 #include <i2cdev.h>
 #include <esp_err.h>
+#include "esp_log.h"
 #include "driver/gpio.h"
 #include "esp_idf_lib_helpers.h"
-#include "../component/pcf8575/pcf8575.h"
+#include "../pcf8575_pro/pcf8575/pcf8575.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,7 +23,26 @@ extern "C" {
 #define HHL_ADDRESS 0x4C    // A[2]A[1]A[0] = 110 
 #define HHH_ADDRESS 0x4E    // A[2]A[1]A[0] = 111 
 
-#define PCF8575_INTERRUPT_PIN GPIO_NUM
+#define PCF8575_INTERRUPT_PIN GPIO_NUM_5
+
+typedef enum {
+    GPIO_NUM_0 = 0,
+    GPIO_NUM_1,
+    GPIO_NUM_2,
+    GPIO_NUM_3,
+    GPIO_NUM_4,
+    GPIO_NUM_5,
+    GPIO_NUM_6,
+    GPIO_NUM_7,
+    GPIO_NUM_10,
+    GPIO_NUM_11,
+    GPIO_NUM_12,
+    GPIO_NUM_13,
+    GPIO_NUM_14,
+    GPIO_NUM_15,
+    GPIO_NUM_16,
+    GPIO_NUM_17
+};
 
 typedef struct {
     uint16_t io_state;
@@ -109,3 +130,6 @@ esp_err_t pcf8575_interruptClear(pcf8575_t *pcf8575);
 /**@}*/
 
 #endif /* __PCF8575_PRO_H__ */
+
+
+

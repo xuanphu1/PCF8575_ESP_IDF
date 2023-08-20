@@ -1,10 +1,11 @@
 #include "PCF.h"
 
+
 //----------------------****----------------------------------------------------------
 // Initialize PCF8575
 esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, uint8_t addr, i2c_port_t port, gpio_num_t sda_gpio, gpio_num_t scl_gpio){
     
-    esp_err_t error_code = pcf8575_init_decs(pcf8575->dev, addr, port , sda_gpio, scl_gpio);
+    esp_err_t error_code = pcf8575_init_desc(pcf8575->dev, addr, port , sda_gpio, scl_gpio);
         if (error_code != ESP_OK) {
             ESP_LOGI(__func__,"pcf8575 initialize failed !");
             return error_code ;
@@ -19,18 +20,18 @@ esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, uint8_t addr, i2c_port_t port, 
 esp_err_t pcf8575_deinitialize(pcf8575_t *pcf8575){
     esp_err_t error_code = pcf8575_free_desc(pcf8575->dev);
     if(error_code != ESP_OK){
-        ESP_LOGI(__func__,"pcf8575 deinitialize failed !")
-        return error_code;
+        ESP_LOGI(__func__,"pcf8575 deinitialize failed !");
+        return error_code ;
     }
     else {
-        ESP_LOGI(__func__,"pcf8575 deinitialize successfully !")
-        return error_code;
+        ESP_LOGI(__func__,"pcf8575 deinitialize successfully !");
+        return ESP_OK ;
     }
 }
 
 esp_err_t pcf8575_readAllPin(pcf8575_t *pcf8575, uint16_t *val) 
 {
-    esp_err_t error_code = pcf8575_port_read(pcf8575->dev,pcf8575->io_state);
+    esp_err_t error_code = pcf8575_port_read(pcf8575->dev,&pcf8575->io_state);
     if(error_code != ESP_OK){
         ESP_LOGI(__func__,"pcf8575 read all pin failed !");
         return error_code;
@@ -55,7 +56,7 @@ esp_err_t pcf8575_writeAllPin(pcf8575_t *pcf8575 ,uint16_t val){
     }
 }
 
-esp_err_t pcf8575_writeOnePin(pcf8575_t *pcf8575, uint8_t pin, bool state){
+esp_err_t pcf8575_writeOnePin(pcf8575_t *pcf8575, uint16_t pin, bool state){
 
     
     if(pin > 15) return ESP_ERR_INVALID_ARG;
@@ -67,7 +68,7 @@ esp_err_t pcf8575_writeOnePin(pcf8575_t *pcf8575, uint8_t pin, bool state){
     return pcf8575_writeAllPin(pcf8575,data);
 }
 
-esp_err_t pcf8575_readOnePin(pcf8575_t *pcf8575, uint16_t pin, bool &state){
+esp_err_t pcf8575_readOnePin(pcf8575_t *pcf8575, uint16_t pin, bool *state){
     if(pin > 15) return ESP_ERR_INVALID_ARG;
 
     uint16_t data = pcf8575->io_state ;
@@ -111,13 +112,12 @@ esp_err_t pcf8575_interruptCheck(pcf8575_t *pcf8575, bool *occurred){
 }
 
 esp_err_t pcf8575_interruptClear(pcf8575_t *pcf8575) {
-    uint16_t data;
-
     // Đọc trạng thái hiện tại của các chân I/O để xóa cờ interrupt
-    esp_err_t ret = pcf8575_read(pcf8575->dev, &pcf8575->io_state);
+    esp_err_t ret = pcf8575_port_read(pcf8575->dev, &pcf8575->io_state);
     if (ret != ESP_OK) {
         return ret;
     }
 
     return ESP_OK;
 }
+
