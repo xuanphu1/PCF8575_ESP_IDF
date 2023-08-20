@@ -7,7 +7,7 @@
 #include "esp_log.h"
 #include "driver/gpio.h"
 #include "esp_idf_lib_helpers.h"
-#include "../pcf8575_pro/pcf8575/pcf8575.h"
+#include "pcf8575.h"
 
 
 #ifdef __cplusplus
@@ -25,24 +25,22 @@ extern "C" {
 
 #define PCF8575_INTERRUPT_PIN GPIO_NUM_5
 
-typedef enum {
-    GPIO_NUM_0 = 0,
-    GPIO_NUM_1,
-    GPIO_NUM_2,
-    GPIO_NUM_3,
-    GPIO_NUM_4,
-    GPIO_NUM_5,
-    GPIO_NUM_6,
-    GPIO_NUM_7,
-    GPIO_NUM_10,
-    GPIO_NUM_11,
-    GPIO_NUM_12,
-    GPIO_NUM_13,
-    GPIO_NUM_14,
-    GPIO_NUM_15,
-    GPIO_NUM_16,
-    GPIO_NUM_17
-};
+#define GPIO_pcf8575_NUM_0 0
+#define GPIO_pcf8575_NUM_1 1
+#define GPIO_pcf8575_NUM_2 2
+#define GPIO_pcf8575_NUM_3 3
+#define GPIO_pcf8575_NUM_4 4
+#define GPIO_pcf8575_NUM_5 5
+#define GPIO_pcf8575_NUM_6 6
+#define GPIO_pcf8575_NUM_7 7
+#define GPIO_pcf8575_NUM_10 8
+#define GPIO_pcf8575_NUM_11 9
+#define GPIO_pcf8575_NUM_12 10
+#define GPIO_pcf8575_NUM_13 11
+#define GPIO_pcf8575_NUM_14 12
+#define GPIO_pcf8575_NUM_15 13
+#define GPIO_pcf8575_NUM_16 14
+#define GPIO_pcf8575_NUM_17 15
 
 typedef struct {
     uint16_t io_state;
