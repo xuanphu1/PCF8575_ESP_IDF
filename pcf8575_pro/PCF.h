@@ -14,33 +14,24 @@
 extern "C" {
 #endif
 
-#define LLL_ADDRESS 0x40    // A[2]A[1]A[0] = 000  
-#define LLH_ADDRESS 0X42    // A[2]A[1]A[0] = 001   
-#define LHL_ADDRESS 0X44    // A[2]A[1]A[0] = 010 
-#define LHH_ADDRESS 0X46    // A[2]A[1]A[0] = 011 
-#define HLL_ADDRESS 0X48    // A[2]A[1]A[0] = 100 
-#define HLH_ADDRESS 0X4A    // A[2]A[1]A[0] = 101 
-#define HHL_ADDRESS 0x4C    // A[2]A[1]A[0] = 110 
-#define HHH_ADDRESS 0x4E    // A[2]A[1]A[0] = 111 
 
-#define PCF8575_INTERRUPT_PIN GPIO_NUM_5
 
-#define GPIO_pcf8575_NUM_0 0
-#define GPIO_pcf8575_NUM_1 1
-#define GPIO_pcf8575_NUM_2 2
-#define GPIO_pcf8575_NUM_3 3
-#define GPIO_pcf8575_NUM_4 4
-#define GPIO_pcf8575_NUM_5 5
-#define GPIO_pcf8575_NUM_6 6
-#define GPIO_pcf8575_NUM_7 7
-#define GPIO_pcf8575_NUM_10 8
-#define GPIO_pcf8575_NUM_11 9
-#define GPIO_pcf8575_NUM_12 10
-#define GPIO_pcf8575_NUM_13 11
-#define GPIO_pcf8575_NUM_14 12
-#define GPIO_pcf8575_NUM_15 13
-#define GPIO_pcf8575_NUM_16 14
-#define GPIO_pcf8575_NUM_17 15
+#define P00 0
+#define P01 1
+#define P02 2
+#define P03 3
+#define P04 4
+#define P05 5
+#define P06 6
+#define P07 7
+#define P10 8
+#define P11 9
+#define P12 10
+#define P13 11
+#define P14 12
+#define P15 13
+#define P16 14
+#define P17 15
 
 typedef struct {
     uint16_t io_state;
@@ -103,24 +94,16 @@ esp_err_t pcf8575_readOnePin(pcf8575_t *pcf8575, uint16_t pin, bool *state);
 esp_err_t pcf8575_writeOnePin(pcf8575_t *pcf8575, uint16_t pin, bool state);
 
 /**
- * @brief Funciton Interrupt
+ * @brief Funciton interrupt initialize
  * @param pcf8575 Struct of pcf8575
- * @param enable enable interrupt or prevent interrupt
 */
-esp_err_t pcf8575_interrupt(pcf8575_t *pcf8575, bool enable);
+esp_err_t pcf8575_interruptInitialize(pcf8575_t *pcf8575);
 
 /**
- * @brief Check interrupt occurred
- * @param pcf8575 Struct of pcf8575
- * @param occurred False(interrupt didn't occur) , True(interrup occurred)
-*/
-esp_err_t pcf8575_interruptCheck(pcf8575_t *pcf8575, bool *occurred);
-
-/**
- * @brief Clear flag interrupt
+ * @brief Function interrupt deinitialize
  * @param pcf8575 Struct of pcf8575
 */
-esp_err_t pcf8575_interruptClear(pcf8575_t *pcf8575);
+esp_err_t pcf8575_interruptDeinitialize(pcf8575_t *pcf8575);
 
 #ifdef __cplusplus
 }
