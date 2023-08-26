@@ -1,5 +1,11 @@
 menu "PCF8575 configuration"
-    
+
+config ADDRESS_PCF8575
+    hex "Address pcf8575"
+    default 0x40
+    help
+        Address default of pcf8575
+
 config INTERRUPT_ENABLE
     bool "Enable interrupt ON/OFF"
     default y

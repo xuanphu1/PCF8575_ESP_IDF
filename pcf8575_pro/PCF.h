@@ -50,7 +50,7 @@ typedef struct {
  * @return ESP_OK 
  * 
 */
-esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, uint8_t addr, i2c_port_t port, gpio_num_t sda_gpio, gpio_num_t scl_gpio);
+esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, i2c_port_t port, gpio_num_t sda_gpio, gpio_num_t scl_gpio);
 
 /**
  * @brief Free device descriptor

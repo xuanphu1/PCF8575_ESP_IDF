@@ -84,16 +84,16 @@ void IRAM_ATTR interrupe_handler(void *arg){
 esp_err_t pcf8575_interruptInitialize(pcf8575_t *pcf8575){
     // Cấu hình GPIO làm đầu vào với chế độ pull-pu là HIGH
 #ifdef CONFIG_PCF8575_INTERRUPT_PIN
-    int pinInterrupt = CONFIG_PCF8575_INTERRUPT_PIN;
+    pcf8575->gpio_interrupt = CONFIG_PCF8575_INTERRUPT_PIN;
     gpio_config_t io_conf;
     io_conf.intr_type = GPIO_INTR_NEGEDGE ; // Kích hoạt interrupt khi GPIO thay đổi
-    io_conf.pin_bit_mask = (1ULL << pinInterrupt);
+    io_conf.pin_bit_mask = (1ULL << pcf8575->gpio_interrupt);
     io_conf.mode = GPIO_MODE_INPUT;
     io_conf.pull_up_en = GPIO_PULLUP_ENABLE;
     gpio_config(&io_conf);
     
     // Hàm xử lý khi interrupt xảy ra
-    gpio_isr_handler_add(pinInterrupt,interrupe_handler,NULL);
+    gpio_isr_handler_add(pcf8575->gpio_interrupt,interrupe_handler,NULL);
 #endif
     return ESP_OK;
 }
@@ -101,8 +101,8 @@ esp_err_t pcf8575_interruptInitialize(pcf8575_t *pcf8575){
 // Hàm vô hiệu hóa interrupt
 esp_err_t pcf8575_interruptDeinitialize(pcf8575_t *pcf8575){    
 #ifdef CONFIG_PCF8575_INTERRUPT_PIN
-    int pinInterrupt = CONFIG_PCF8575_INTERRUPT_PIN;
-    gpio_intr_disable(pinInterrupt);
+    int pcf8575->gpio_interrupt = CONFIG_PCF8575_INTERRUPT_PIN;
+    gpio_intr_disable(pcf8575->gpio_interrupt);
 #endif
 }
 #endif
