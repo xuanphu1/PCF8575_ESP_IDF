@@ -45,6 +45,8 @@ extern "C" {
 
 #define PCF8575_I2C_ADDR_BASE 0x20
 
+#define BV(x) (1 << (x))
+
 /**
  * @brief Initialize device descriptor
  *

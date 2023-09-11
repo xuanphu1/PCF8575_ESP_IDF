@@ -31,14 +31,13 @@
  * MIT Licensed as described in the file LICENSE
  */
 #include <esp_err.h>
-#include <esp_idf_lib_helpers.h>
+#include <esp_idf_lib_helpers/esp_idf_lib_helpers.h>
 #include "pcf8575.h"
 
 #define I2C_FREQ_HZ 400000
 
 #define CHECK(x) do { esp_err_t __; if ((__ = x) != ESP_OK) return __; } while (0)
 #define CHECK_ARG(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
-#define BV(x) (1 << (x))
 
 static esp_err_t read_port(i2c_dev_t *dev, uint16_t *val)
 {
