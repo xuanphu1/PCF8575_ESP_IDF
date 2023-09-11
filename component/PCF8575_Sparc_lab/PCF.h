@@ -1,3 +1,13 @@
+/**
+ * @author Ho Xuan Phu (@Phu20214041) && Pham Van Sang (https://github.com/sang8022002)
+ * @brief Library PCF8575
+ * @date 2023-08-15
+ * 
+ * @copyright Copyright (C) 2023
+*/
+
+
+
 #ifndef __PCF8575_PRO_H__
 #define __PCF8575_PRO_H__
 
