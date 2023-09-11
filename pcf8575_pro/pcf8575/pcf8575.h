@@ -36,7 +36,7 @@
 #define __PCF8575_H__
 
 #include <stddef.h>
-#include <i2cdev.h>
+#include <i2cdev/i2cdev.h>
 #include <esp_err.h>
 
 #ifdef __cplusplus
@@ -44,6 +44,8 @@ extern "C" {
 #endif
 
 #define PCF8575_I2C_ADDR_BASE 0x20
+
+#define BV(x) (1 << (x))
 
 /**
  * @brief Initialize device descriptor
