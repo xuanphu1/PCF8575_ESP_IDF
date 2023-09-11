@@ -2062,6 +2062,36 @@
             {
                 "children": [],
                 "depends_on": null,
+                "help": "PORT I2C",
+                "id": "PCF8575_PORT_I2C",
+                "name": "PCF8575_PORT_I2C",
+                "range": null,
+                "title": "PCF8575_PORT_I2C",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": "GPIO for SDA",
+                "id": "PCF8575_SDA_GPIO",
+                "name": "PCF8575_SDA_GPIO",
+                "range": null,
+                "title": "PCF8575_SDA_GPIO",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": "GPIO for SCL",
+                "id": "PCF8575_SCL_GPIO",
+                "name": "PCF8575_SCL_GPIO",
+                "range": null,
+                "title": "PCF8575_SCL_GPIO",
+                "type": "int"
+            },
+            {
+                "children": [],
+                "depends_on": null,
                 "help": "GPIO number for TX.",
                 "id": "PCF8575_INTERRUPT_GPIO",
                 "name": "PCF8575_INTERRUPT_GPIO",

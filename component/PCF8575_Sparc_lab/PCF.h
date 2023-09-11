@@ -48,21 +48,18 @@ typedef struct {
     uint16_t io_state;
     i2c_dev_t *dev ;
     uint8_t address ;
-    int gpio_interrupt;
+    int gpio_interrupt, sda_gpio, scl_gpio, port;
 } pcf8575_t ;
 #define BV(x) (1 << (x))
 
 /**
  * @brief Initalize device descriptor
  * @param pcf8575 Struct of pcf8575
- * @param addr Address of I2C (0x0100[A2][A1][A0][R/W] for pcf8575])
- * @param port Port I2C
- * @param scl GPIO set up scl
- * @param sda GPIO set up sda 
+ * 
  * @return ESP_OK 
  * 
 */
-esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, i2c_port_t port, gpio_num_t sda_gpio, gpio_num_t scl_gpio);
+esp_err_t pcf8575_initialize(pcf8575_t *pcf8575); 
 
 /**
  * @brief Free device descriptor

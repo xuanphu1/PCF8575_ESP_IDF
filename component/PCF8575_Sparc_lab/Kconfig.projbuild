@@ -1,5 +1,23 @@
 menu "PCF8575 configuration"
 
+    config PCF8575_PORT_I2C
+        int "PCF8575_PORT_I2C"
+        default 0
+        help
+            PORT I2C
+
+    config PCF8575_SDA_GPIO
+        int "PCF8575_SDA_GPIO"
+        default 21
+        help    
+            GPIO for SDA
+
+    config PCF8575_SCL_GPIO
+        int "PCF8575_SCL_GPIO"
+        default 22
+        help 
+            GPIO for SCL
+
     config PCF8575_INTERRUPT_GPIO
         int "PCF8575_INTERUPT_GPIO"
         default 17

@@ -3,9 +3,12 @@
 
 //----------------------****----------------------------------------------------------
 // Initialize PCF8575
-esp_err_t pcf8575_initialize(pcf8575_t *pcf8575, i2c_port_t port, gpio_num_t sda_gpio, gpio_num_t scl_gpio){
+esp_err_t pcf8575_initialize(pcf8575_t *pcf8575){
     pcf8575->address = CONFIG_PCF8575_ADDRESS;
-    esp_err_t error_code = pcf8575_init_desc(pcf8575->dev, pcf8575->address, port , sda_gpio, scl_gpio);
+    pcf8575->sda_gpio = CONFIG_PCF8575_SDA_GPIO;
+    pcf8575->scl_gpio = CONFIG_PCF8575_SCL_GPIO;
+    pcf8575->port = CONFIG_PCF8575_PORT_I2C;
+    esp_err_t error_code = pcf8575_init_desc(pcf8575->dev, pcf8575->address, pcf8575->port , pcf8575->sda_gpio, pcf8575->scl_gpio);
         if (error_code != ESP_OK) {
             ESP_LOGI(__func__,"pcf8575 initialize failed !");
             return error_code ;
