@@ -1,0 +1,25 @@
+menu "PCF8575 configuration"
+
+    config PCF8575_INTERRUPT_GPIO
+        int "PCF8575_INTERUPT_GPIO"
+        default 17
+        help
+            GPIO number for TX.
+
+    config PCF8575_ADDRESS
+        hex "PCF575_ADDRESS"
+        default 0x40
+        help
+            0x40    // A[2]A[1]A[0] = 000  
+            0X42    // A[2]A[1]A[0] = 001   
+            0X44    // A[2]A[1]A[0] = 010 
+            0X46    // A[2]A[1]A[0] = 011 
+            0X48    // A[2]A[1]A[0] = 100 
+            0X4A    // A[2]A[1]A[0] = 101 
+            0x4C    // A[2]A[1]A[0] = 110 
+            0x4E    // A[2]A[1]A[0] = 111 
+
+
+
+
+endmenu
