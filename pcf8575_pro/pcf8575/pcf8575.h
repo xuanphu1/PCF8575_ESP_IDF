@@ -36,7 +36,7 @@
 #define __PCF8575_H__
 
 #include <stddef.h>
-#include <i2cdev.h>
+#include <i2cdev/i2cdev.h>
 #include <esp_err.h>
 
 #ifdef __cplusplus
